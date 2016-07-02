@@ -15,6 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.example.plainolnotes.notesprovider"
+            android:name=".data.NoteProvider"
+            android:exported="false">
+        </provider>
     </application>
 
 </manifest>
