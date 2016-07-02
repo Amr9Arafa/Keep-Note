@@ -1,0 +1,1 @@
+building note-taking app with lynda.com
