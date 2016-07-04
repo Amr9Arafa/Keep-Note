@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -19,6 +22,8 @@ import com.example.amrarafa.keepn.data.NoteProvider;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private CursorAdapter cursorAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ListView listView= (ListView) findViewById(R.id.android_list);
         listView.setAdapter(cursorAdapter);
 
-        getLoaderManager().initLoader(0,null,this);
+        getLoaderManager().initLoader(0, null, this);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void insertNote(String textNote) {
