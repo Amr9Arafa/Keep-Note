@@ -35,10 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
 
 
-        String[] from= {DbOpenHelper.NOTE_TEXT};
-        int[] to= {R.id.tvNote};
-        cursorAdapter = new SimpleCursorAdapter(this,R.layout.note_list_item
-        ,null,from,to,0);
+        cursorAdapter = new NotesCursorAdapter(this,null,0);
 
         ListView listView= (ListView) findViewById(R.id.list);
         listView.setAdapter(cursorAdapter);
