@@ -17,10 +17,20 @@
         </activity>
 
         <provider
-            android:authorities="com.example.plainolnotes.notesprovider"
             android:name=".data.NoteProvider"
-            android:exported="false">
+            android:authorities="com.example.plainolnotes.notesprovider"
+            android:exported="false" >
         </provider>
+
+        <activity
+            android:name=".EditorActivity"
+            android:label="@string/title_activity_editor"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.amrarafa.keepn.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
