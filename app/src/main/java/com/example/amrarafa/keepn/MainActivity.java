@@ -34,14 +34,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        insertNote(" new text");
 
         String[] from= {DbOpenHelper.NOTE_TEXT};
-        int[] to= {android.R.id.text1};
-        cursorAdapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_1
+        int[] to= {R.id.tvNote};
+        cursorAdapter = new SimpleCursorAdapter(this,R.layout.note_list_item
         ,null,from,to,0);
 
-        ListView listView= (ListView) findViewById(R.id.android_list);
+        ListView listView= (ListView) findViewById(R.id.list);
         listView.setAdapter(cursorAdapter);
 
         getLoaderManager().initLoader(0, null, this);
