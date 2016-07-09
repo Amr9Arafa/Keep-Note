@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ContentValues contentValues= new ContentValues();
         contentValues.put(DbOpenHelper.NOTE_TEXT,textNote);
         Uri uri=getContentResolver().insert(NoteProvider.CONTENT_URI,contentValues);
-        Log.d("MainACtivity", "Inserted note " + uri.getLastPathSegment());
+        Log.d("MainActivity", "Inserted note " + uri.getLastPathSegment());
     }
 
     @Override
@@ -142,5 +143,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Intent intent =new Intent(this,EditorActivity.class);
         startActivityForResult(intent,EDITOR_REQUEST_CODE);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if ((requestCode==EDITOR_REQUEST_CODE)&&( resultCode==RESULT_OK)){
+            restatLoader();
+        }
     }
 }

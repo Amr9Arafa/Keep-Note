@@ -19,6 +19,8 @@ public class NoteProvider extends ContentProvider {
     private static final String BASE_PATH = "notes";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH );
 
+    public static final String CONTENT_ITEM_TYPE="Note";
+
     // Constant to identify the requested operation
     private static final int NOTES = 1;
     private static final int NOTES_ID = 2;
@@ -45,7 +47,7 @@ public class NoteProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortingOrder) {
 
         return database.query(DbOpenHelper.TABLE_NOTES ,DbOpenHelper.ALL_COLUMNS ,selection ,null
-        ,null,null,DbOpenHelper.NOTE_CREATED );
+        ,null,null,DbOpenHelper.NOTE_CREATED  + " DESC" );
     }
 
     @Nullable
