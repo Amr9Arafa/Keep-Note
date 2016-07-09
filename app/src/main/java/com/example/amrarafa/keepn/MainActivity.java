@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -42,6 +43,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         ListView listView= (ListView) findViewById(R.id.list);
         listView.setAdapter(cursorAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent =new Intent(MainActivity.this,EditorActivity.class);
+                Uri uri= Uri.parse(NoteProvider.CONTENT_URI + "/"+ id);
+                intent.putExtra(NoteProvider.CONTENT_ITEM_TYPE,uri);
+                startActivityForResult(intent,EDITOR_REQUEST_CODE);
+            }
+        });
 
         getLoaderManager().initLoader(0, null, this);
 

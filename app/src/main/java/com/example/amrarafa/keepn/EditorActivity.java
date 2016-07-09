@@ -2,6 +2,7 @@ package com.example.amrarafa.keepn;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.amrarafa.keepn.data.DbOpenHelper;
 import com.example.amrarafa.keepn.data.NoteProvider;
@@ -24,6 +26,8 @@ public class EditorActivity extends AppCompatActivity {
 
     private String action;
     private EditText editor;
+    private String noteFiler;
+    private String oldText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,21 @@ public class EditorActivity extends AppCompatActivity {
         if (uri == null){
             action= Intent.ACTION_INSERT;
             setTitle(getString(R.string.new_note));
+        }
+        else {
+            action=Intent.ACTION_EDIT;
+            noteFiler=DbOpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+
+            Cursor cursor =getContentResolver().
+                    query(uri,DbOpenHelper.ALL_COLUMNS,noteFiler,null,null);
+
+            cursor.moveToFirst();
+            oldText=cursor.getString(cursor.getColumnIndex(DbOpenHelper.NOTE_TEXT));
+            editor.setText(oldText);
+            editor.requestFocus();
+
+
+
         }
 
     }
@@ -80,9 +99,28 @@ public class EditorActivity extends AppCompatActivity {
                 else {
                     insertNote(newText);
                 }
+                break;
+            case Intent.ACTION_EDIT:
+                if(newText.length()==0){
+                    //delete note
+                }else if (oldText.equals(newText)){
+                    setResult(RESULT_CANCELED);
+                }else{
+                    updateNote(newText);
+                }
 
-                finish();
+
         }
+        finish();
+    }
+
+    private void updateNote(String textNote) {
+        ContentValues contentValues= new ContentValues();
+        contentValues.put(DbOpenHelper.NOTE_TEXT,textNote);
+        getContentResolver().update(NoteProvider.CONTENT_URI, contentValues, noteFiler, null);
+        Toast.makeText(this, R.string.note_updated, Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK);
+
     }
 
     private void insertNote(String textNote) {
